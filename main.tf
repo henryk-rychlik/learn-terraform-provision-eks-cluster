@@ -50,7 +50,7 @@ module "vpc" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.8.5"
+  version = "20.37.2"
 
   cluster_name    = local.cluster_name
   cluster_version = "1.36"
@@ -62,6 +62,10 @@ module "eks" {
     aws-ebs-csi-driver = {
       service_account_role_arn = module.irsa-ebs-csi.iam_role_arn
     }
+  }
+
+  cluster_upgrade_policy = {
+    support_type = "STANDARD"
   }
 
   vpc_id     = module.vpc.vpc_id
